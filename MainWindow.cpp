@@ -80,8 +80,8 @@ void MainWindow::on_feedTableView_clicked(const QModelIndex &index)
     connect(_reply, SIGNAL(error(QNetworkReply::NetworkError)),
             this, SLOT(slotError(QNetworkReply::NetworkError)));
 
-//    connect(_reply, SIGNAL(sslErrors(QList<QSslError>)),
-//            this, SLOT(slotSslErrors(QList<QSslError>)));
+    //    connect(_reply, SIGNAL(sslErrors(QList<QSslError>)),
+    //            this, SLOT(slotSslErrors(QList<QSslError>)));
 
     if (index.isValid())
     {
@@ -112,7 +112,7 @@ void MainWindow::slotReadyRead()
             {
                 if(titleStr != "")
                 {
-//                    _rssModel->AddItem(QPair<QString, QString>(titleStr, linkStr));
+                    //                    _rssModel->AddItem(QPair<QString, QString>(titleStr, linkStr));
                 }
                 titleStr.clear();
                 linkStr.clear();
@@ -179,12 +179,17 @@ void MainWindow::OnActionRemove()
 
 void MainWindow::OnActionQuit()
 {
-    QApplication::quit();
+    QMessageBox::StandardButton reply;
+    reply = QMessageBox::question(this, "Выход", "Вы уверены что хотите\nзакрыть программу RSS-клиент?",
+                                  QMessageBox::Yes|QMessageBox::No);
+    if (reply == QMessageBox::Yes) {
+        QApplication::quit();
+    }
 }
 
 void MainWindow::OnActionAbout()
 {
     QMessageBox::about(this, tr("О Программе"), tr("Эта программа создана в рамках \n"
-                                                "курсового проекта, и предоставляет полный функционал \n"
-                                                "для чтения RSS лент новостей"));
+                                                   "курсового проекта, и предоставляет полный функционал \n"
+                                                   "для чтения RSS лент новостей"));
 }
